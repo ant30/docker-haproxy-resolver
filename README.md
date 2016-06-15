@@ -88,7 +88,9 @@ haproxy_1       | [WARNING] 166/135005 (8) : Server nginx_proxy/app is DOWN. 0 a
 haproxy_1       | [WARNING] 166/135005 (8) :  nginx_proxy/app changed its IP from 172.16.0.3 to 172.16.0.5 by dockerdns/dockerowned
   ```
 
-So the test is **failed** because HAProxy can't detect the other server with nginx-proxy name
+So the test is **failed** because HAProxy can't detect the other server with nginx-proxy name with haproxy 1.6.5
+
+*Note:* The test is **OK** If you use haproxy 1.6.4
 
 
 ### Verifying Nginx DNS resolver (currently, it run!)
