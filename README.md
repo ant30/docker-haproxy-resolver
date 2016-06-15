@@ -84,8 +84,8 @@ haproxy_1       | [WARNING] 166/135005 (8) : Health check for server nginx_proxy
 haproxy_1       | [WARNING] 166/135005 (8) : Server nginx_proxy/app is DOWN. 0 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
 
        ```
- 1. I was hoping to see something like next line, but I didn't see after the
-       hold valid period or the name TTL:
+ 1. I was hoping to see something like next log line, but I didn't see after
+    the hold valid period or the name TTL:
        ```
 haproxy_1       | [WARNING] 166/135005 (8) :  nginx_proxy/app changed its IP from 172.16.0.3 to 172.16.0.5 by dockerdns/dockerowned
       ```
@@ -95,23 +95,23 @@ So the test is *failed* because HAProxy can't detect the other server with nginx
 
 ### Verifying Nginx DNS resolver (currently, it run!)
 
-    1. Run `docker-compose build`
-    1. Run `docker-compose up -d`
-    1. Open in other terminal a `docker-compose logs -f`
-    1. Run `docker-compose scale http-service=2`
-    1. You can do the `dig` test here if you want to be sure.
-    1. Wait some seconds
-    1. Check the service is ok with `curl http://localhost:8000/index.html`
-    1. Stop `http-service_1` with `docker stop dockerhaproxyresolver_http-service_1`
-    1. You can watch in the logs windows that nginx is detecting that the
-       service is down.
+ 1. Run `docker-compose build`
+ 1. Run `docker-compose up -d`
+ 1. Open in other terminal a `docker-compose logs -f`
+ 1. Run `docker-compose scale http-service=2`
+ 1. You can do the `dig` test here if you want to be sure.
+ 1. Wait some seconds
+ 1. Check the service is ok with `curl http://localhost:8000/index.html`
+ 1. Stop `http-service_1` with `docker stop dockerhaproxyresolver_http-service_1`
+ 1. You can watch in the logs windows that nginx is detecting that the
+    service is down.
        ```
 nginx-proxy_1   | 2016/06/15 14:23:33 [error] 6#6: *222 connect() failed (113: No route to host) while connecting to upstream, client: 172.18.0.3, server: _, request: "GET / HTTP/1.1", upstream: "http://172.18.0.2:9000/", host: "nginx-proxy"
 nginx-proxy_1   | 2016/06/15 14:23:33 [warn] 6#6: *222 upstream server temporarily disabled while connecting to upstream, client: 172.18.0.3, server: _, request: "GET / HTTP/1.1", upstream: "http://172.18.0.2:9000/", host: "nginx-proxy"
        ```
-    1. If you a request with curl it can fail.
-    1. After some seconds, if you repeat the curl request, the nginx resolver
-       do the magic and the backend IP is changed without reload nginx service.
+ 1. If you a request with curl it can fail.
+ 1. After some seconds, if you repeat the curl request, the nginx resolver
+    do the magic and the backend IP is changed without reload nginx service.
 
     So the test is *OK*
 
