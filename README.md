@@ -47,13 +47,13 @@ Software used out of containers:
 
 ### Verifying HAProxy DNS resolver (currently, it does not run)
 
-    1. Run `docker-compose build`
-    1. Run `docker-compose up -d`
-    1. Open in other terminal a `docker-compose logs -f`
-    1. Run `docker-compose scale nginx-proxy=2`
-    1. Wait some seconds
-    1. If you do a `dig command` from one of the servers you see two servers
-       with the same name:
+ 1. Run `docker-compose build`
+ 1. Run `docker-compose up -d`
+ 1. Open in other terminal a `docker-compose logs -f`
+ 1. Run `docker-compose scale nginx-proxy=2`
+ 1. Wait some seconds
+ 1. If you do a `dig command` from one of the servers you see two servers
+    with the same name:
      ```
 root@9f6914e6e591:/srv# dig @127.0.0.11 nginx-proxy
 ; <<>> DiG 9.8.4-rpz2+rl005.12-P1 <<>> @127.0.0.11 nginx-proxy
@@ -75,22 +75,22 @@ nginx-proxy.            600     IN      A       172.18.0.4
 ;; WHEN: Wed Jun 15 13:35:24 2016
 ;; MSG SIZE  rcvd: 83
        ```
-    1. Check the service is ok with `curl http://localhost:8000/index.html`
-    1. Stop `nginx-proxy_1` with `docker stop dockerhaproxyresolver_nginx-proxy_1`
-    1. You can watch in the logs windows that haproxy is detecting that the
-       service is down.
+ 1. Check the service is ok with `curl http://localhost:8000/index.html`
+ 1. Stop `nginx-proxy_1` with `docker stop dockerhaproxyresolver_nginx-proxy_1`
+ 1. You can watch in the logs windows that haproxy is detecting that the
+    service is down.
        ```
 haproxy_1       | [WARNING] 166/135005 (8) : Health check for server nginx_proxy/app failed, reason: Layer4 timeout, check duration: 2002ms, status: 0/2 DOWN.
 haproxy_1       | [WARNING] 166/135005 (8) : Server nginx_proxy/app is DOWN. 0 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
 
        ```
-    1. I was hoping to see something like next line, but I didn't see after the
+ 1. I was hoping to see something like next line, but I didn't see after the
        hold valid period or the name TTL:
        ```
 haproxy_1       | [WARNING] 166/135005 (8) :  nginx_proxy/app changed its IP from 172.16.0.3 to 172.16.0.5 by dockerdns/dockerowned
       ```
 
-    So the test is *failed* because HAProxy can't detect the other server with nginx-proxy name
+So the test is *failed* because HAProxy can't detect the other server with nginx-proxy name
 
 
 ### Verifying Nginx DNS resolver (currently, it run!)
@@ -113,7 +113,7 @@ nginx-proxy_1   | 2016/06/15 14:23:33 [warn] 6#6: *222 upstream server temporari
     1. After some seconds, if you repeat the curl request, the nginx resolver
        do the magic and the backend IP is changed without reload nginx service.
 
-    So the test is *failed*
+    So the test is *OK*
 
 
 
