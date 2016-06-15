@@ -81,12 +81,12 @@ nginx-proxy.            600     IN      A       172.18.0.4
   ```
 haproxy_1       | [WARNING] 166/135005 (8) : Health check for server nginx_proxy/app failed, reason: Layer4 timeout, check duration: 2002ms, status: 0/2 DOWN.
 haproxy_1       | [WARNING] 166/135005 (8) : Server nginx_proxy/app is DOWN. 0 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
-
 ```
 1. I was hoping to see something like next log line, but I didn't see after
  the hold valid period or the name TTL:
    ```
 haproxy_1       | [WARNING] 166/135005 (8) :  nginx_proxy/app changed its IP from 172.16.0.3 to 172.16.0.5 by dockerdns/dockerowned
+
 ```
 
 So the test is **failed** because HAProxy can't detect the other server with nginx-proxy name
