@@ -85,6 +85,7 @@ haproxy_1       | [WARNING] 166/135005 (8) : Health check for server nginx_proxy
 haproxy_1       | [WARNING] 166/135005 (8) : Server nginx_proxy/app is DOWN. 0 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
 
 ```
+
  1. I was hoping to see something like next log line, but I didn't see after
     the hold valid period or the name TTL:
 
@@ -92,7 +93,7 @@ haproxy_1       | [WARNING] 166/135005 (8) : Server nginx_proxy/app is DOWN. 0 a
 haproxy_1       | [WARNING] 166/135005 (8) :  nginx_proxy/app changed its IP from 172.16.0.3 to 172.16.0.5 by dockerdns/dockerowned
 ```
 
-So the test is *failed* because HAProxy can't detect the other server with nginx-proxy name
+So the test is **failed** because HAProxy can't detect the other server with nginx-proxy name
 
 
 ### Verifying Nginx DNS resolver (currently, it run!)
@@ -117,7 +118,7 @@ nginx-proxy_1   | 2016/06/15 14:23:33 [warn] 6#6: *222 upstream server temporari
  1. After some seconds, if you repeat the curl request, the nginx resolver
     do the magic and the backend IP is changed without reload nginx service.
 
-    So the test is *OK*
+So the test is **OK**
 
 
 
